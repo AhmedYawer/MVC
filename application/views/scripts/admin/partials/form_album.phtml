@@ -1,0 +1,33 @@
+<?php echo $this->partial('admin/partials/form_album_script.phtml');?>
+<!-- 
+This form includes a script partial which handles front end validation using jquery validate libary.
+
+This plugin can be downloaded from: http://bassistance.de/jquery-plugins/jquery-plugin-validation
+
+The partial uses Zend headScript - capturing scripts and, in this case, placing them at the end of the layout file.
+
+The layout's footer partial has a new tag added at the end of the file: $this->headScript();
+
+-->
+
+<form class="form-horizontal" role="form" action="/admin<?php echo $this->form->getAction() ?>" method="post" id="form_add_album">
+<input type='hidden' name = 'id' value="<?php echo $this->form->getValue('id')?>"  />
+  <div class="form-group">
+    <label for="inputEmail1" class="col-md-2 control-label">Artist</label>
+    <div class="col-md-10">
+      <input type="text" class="form-control required" id="artist" name="artist" placeholder="Artist" value="<?php echo $this->form->getValue('artist')?>">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="title" class="col-md-2 control-label">Album</label>
+    <div class="col-md-10">
+      <input type="text" class="form-control required" id="title" name="title" placeholder="Album Title" value="<?php echo $this->form->getValue('title')?>">
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+      <button type="submit" class="btn btn-default"><?php echo $this->form->getValue('submit') ?></button>
+    </div>
+  </div>
+</form>

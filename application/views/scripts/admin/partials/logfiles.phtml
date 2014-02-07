@@ -1,0 +1,113 @@
+
+<?php  $this->headScript()->captureStart() ?>
+
+$(function(){
+
+    //Attach a handler to info button on logfile table
+    $('#tableLogFile').on('click','.btn-info, .btn-danger',function () {
+    
+    var logDetailsRowId = '#logDetailsRow_' + $(this).attr('data-log-id');
+    
+    
+    if ($(this).hasClass('btn-info')) {
+        $('.logDetailsMessage').fadeOut();
+        $(logDetailsRowId).fadeIn();
+    }
+    
+    if ($(this).hasClass('btn-danger')) {
+       
+       deleteLogMessage($(this).attr('data-log-id'));
+   
+    }
+    
+    });
+    
+    
+       //Attach a handler to info button on logfile table
+    $('#tableLogFile').on('click','.btn-close',function () {
+    
+    var logDetailsRowId = '#logDetailsRow_' + $(this).attr('data-log-id');
+    
+      
+    $(logDetailsRowId).fadeOut();
+    
+    });
+
+
+
+
+});
+
+
+function deleteLogMessage(log_id) {
+
+        var params = new Object();
+        
+        params.id = log_id;
+	
+	var ajaxURL =  "/admin/deletelogentry/";
+
+	$.ajax({
+		url : ajaxURL,
+		data : params,
+		type : 'POST',
+		async: false,
+		success : function(data) {
+                    //Check the status key of data, and if 1, 
+                    //remove row and associated row containing details
+                  if (data['status']==1) {
+                    
+                   //Removing the details row
+                    var logDetailsRowId = '#logDetailsRow_' + log_id;
+                   
+                    $(logDetailsRowId).remove();
+                    
+                    var logRowId = '#logRow_' +log_id;
+                    $(logRowId).remove();
+                    
+                    
+                    }
+		}
+	});
+}
+
+<?php $this->headScript()->captureEnd() ?>
+<!--  notice start of table and header are BEFORE the loop -->
+<table id="tableLogFile" class="table table-striped">
+<tr>
+	<th>Log ID</th>
+	<th>Log DT</th>
+	<th>Priority</th>
+	<th>Message</th>
+</tr>
+<?php foreach($this->paginator as $record) : ?>
+
+<!-- 
+    By default, the escape() method uses the PHP htmlspecialchars() function for escaping. 
+    However, depending on your environment, you may wish for escaping to occur in a different way.
+    Use the setEscape() method at the controller level to tell Zend_View what escaping callback to use. 
+-->
+
+<tr id="logRow_<?php echo $this->escape($record['log_id'])?>">
+	<td><?php echo $this->escape($record['log_id'])?></td>
+	<td><?php echo $this->escape(stripslashes($record['log_dt']));?></td>
+        <td><?php echo $this->escape(substr(stripslashes($record['log_message']),0,50));?></td>
+        <td>
+            <button class="btn btn-info" data-log-id="<?php echo $this->escape($record['log_id'])?>">View</button>
+            <button class="btn btn-danger" data-log-id="<?php echo $this->escape($record['log_id'])?>">Delete</button>
+	
+	</td>
+</tr>
+<tr style="display: none" class="logDetailsMessage" id="logDetailsRow_<?php echo $this->escape($record['log_id'])?>">
+        <td colspan="3"><?php echo $this->escape($record['log_message'])?></td>
+        <td> <button class="btn btn-success btn-close" data-log-id="<?php echo $this->escape($record['log_id'])?>"><i class="glyphicon glyphicon-eye-close"></i></button></td>
+</tr>
+
+
+<?php endforeach; ?>
+</table><!-- /notice end tag is OUTSIDE the loop -->
+
+
+
+<?php echo $this->paginationControl($this->collectionOfAlbums, 'Sliding', 'admin/partials/paginationcontrols.phtml'); ?>
+

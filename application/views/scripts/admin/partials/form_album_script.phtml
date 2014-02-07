@@ -1,0 +1,10 @@
+<?php $this->headScript()->appendFile('/assets/js/jquery.validate.js'); ?>
+<?php $this->headScript()->captureStart() ?>
+
+$(function () {
+
+    $('#form_add_album').validate();
+
+} );
+
+<?php $this->headScript()->captureEnd() ?>

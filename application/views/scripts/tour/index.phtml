@@ -1,0 +1,37 @@
+<div class="row">
+	<div class="col-lg-12">
+<table class="table">
+    <tr>
+        <th>tour_id</th>
+        <th>tour_title</th>
+        <th>tour_dt</th>
+        <th>active_tour_id</th>
+    </tr>
+<?php
+
+
+foreach($this->rows as $row) {
+    
+    
+ $id = $row['active_tour_id'];
+	echo "<tr>" ;
+	echo "<td>" . $row['tour_id'] . "</td>";
+ 	echo "<td>" . $row['capacity'] . "</td>";
+ 	echo "<td>" . $row['availability'] . "</td>";
+	echo "<td>" . $row['tour_title'] . "</td>";
+	echo "<td>" . $row['tour_dt'] . "</td>";
+	echo "<td>" . $row['active_tour_id'] . "</td>";
+	if ($row['availability'] > 0 ) {
+    	echo "<td><a href=\"/tour/booking/id/$id\">Book Now</a></td>";
+	} else {
+    	echo "<td>Booked Out</td>";
+   	 
+	}
+	echo  "</tr>";
+
+    
+}
+?>
+</table>
+	</div>
+</div>

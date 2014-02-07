@@ -1,0 +1,131 @@
+<h1>MVC PHP DSA Movies Build Notes</h1>
+
+<h2>Branch: API - working with JSON and web services</h2>
+<p>Approximate Lecture Time: 60 minutes</p>
+
+
+<h2>Branch: step_9_access_control_roles</h2>
+<p>Approximate Lecture Time: 60 minutes</p>
+
+
+<h2>Branch: step_9_table_joins_foreign_keys</h2>
+<p>Approximate Lecture Time: 60 minutes</p>
+<li>3 tables created: people, movie_directors, movies</li>
+<li>Movie directors joined by foreign key to people table</li>
+<li>Movies table joined by foreign key to directors table</li>
+<li>New forms, menus added to create people, directors and movies</li>
+<li>Assumption is everyone has unique names (first name and last name) - unique key created on these two columns, preventing duplicates</li>
+
+
+<h2>Branch: step_8_basic_authentication</h2>
+<p>Approximate Lecture Time: 60 minutes</p>
+<li>Added sql script to create admin users table</li>
+<li>Added AuthController.php</li>
+<li>Added new view file /views/scripts/auth/index.phtml
+<li>Added new folder /application/services</li>
+<li>Added new service: Application_Service_Auth</li>
+<li>Added new form: Application_Login_Form</li>
+<li>Modified the form in partial navbar.phtml so that inputs have name attributes (name = 'username', name='password') to match login form model</li>
+<li>Modified the form action in partial navbar.phtml so it points to new /auth controller</li>
+<li>Modified the form method to POST</li>
+<li>Modified the navbar.phtml so it only displays login form if not logged in, otherwise displays the logout button
+<li>Modified the navbar.phtml so it displays an additional dropbox menu which will be used later for admin tasks</li>
+<li>Admin controller modified so it no longer displays if user not logged in - code placed in init function which is called at the start</li>    
+
+
+<h2>Branch: step_7_add_logging_and_json_response</h2>
+<p>Approximate Lecture Time: 60 minutes</p>
+
+<li>Added <a href='http://getbootstrap.com/components/#pagination'>Bootstrap pagination styling</a> to the pagination control</li>
+<li>This illustrates use of jquery to hide, show and delete rows in the table based on a a Json response from server</li>
+<li>Note how admin/deletelogentry sends back a json result as an array. If they status key ==1, it deletes the row</li>
+<li>All the jquery code required for this behaviour is in logfiles.phtml </li>
+<li>Heavy use is made of data attributes to determine the which record should be deleted</li>
+
+<h2>Branch: step_6_edit_record_paginating_records</h2>
+<p>Approximate Lecture Time: 60 minutes</p>
+<ul>
+<li>New Setup Controller to create 100 fake records (/setup/createalbums)</li>
+<li>Note how views and layouts turned off in init()function of SetupController</li>
+<li>Paginator object and control added to model, view and controller, to paginate the results
+<li>Code updated to handle form updates</li>
+</ul>
+
+<h2>Branch: step_5_delete_record_with_confirmation</h2>
+<p>Approximate Lecture Time: 60 minutes</p>
+<ul>
+<li>/views/admin/partials/form_album.phtml modified to allow form values to be inserted from db via controller</li>
+<li>Update Album view file added</li>
+<li>Forms/album.php updated so we can alter the text on submit button from Add Album to Update album</li>
+<li>Note, when calling the form partial file, we pass in the form object as an array item</li>
+<li>The form_album.phtml file has been modifed to insert values from the populated form</li>
+<li>Added git cheatsheet to the docs folder</li>
+</ul>
+
+
+<h2>Branch: step_4_add_record_with_form_and_validation</h2>
+<p>Approximate Lecture Time: 60 minutes</p>
+<ul>
+<li>Move the admin nav panel to a partial file (/views/admin/partials/admin_nav.phtml) and include it in all admin layouts</li>
+<li>Create a form to add a record</li>
+<li>Add jquery form validation at the front end</li>
+<li>Capture and validate the form posted</li>
+<li>Update the admin listing so it illustrates the edit and the delete links for the record</li>
+<li>Use Bootstrap form controls - do not use Zend form decorators as they tend to get very messy for layout</li>
+<li>This form includes a script partial which handles front end validation using jquery validate libary.</li>
+<li>This plugin can be downloaded from: http://bassistance.de/jquery-plugins/jquery-plugin-validation</li>
+<li>The partial uses Zend headScript - capturing scripts and, in this case, placing them at the end of the main page.</li>
+<li>The layout's footer partial has a new tag added at the end of the file: $this->headScript();</li>
+
+</ul>
+
+
+<h2>Branch: step_3_database_setup_insertion_and_retrieval</h2>
+<p>Approximate Lecture Time: 60 minutes</p>
+<ul>
+<li>Modify application.ini so all errors and exceptions are set to 1 so we see all errors</li>
+<li>Create a database called dsatunes</li>
+<li>Update application.ini with database settings</li>
+<li>Create a table for albums using script in /setup/sql/create_albums_table.sql</li>
+<li>Populate the albums table using script in /setup/sql/populate_albums_table.sql</li>
+<li>Demonstrates the use of phpmyadmin for setting up databases</li>
+<li>Demonstrates creating a model to connect to database table</li>
+<li>Demonstrates retreiving records from database and populating template in framework</li>
+<li>Demonstrates use of fetchAll to retrieve all records
+<li>Note how tables are constructed using foreach loop in /tunes/index</li>
+<li>Use of $this->escape() to output code
+<li>Use the same retrieval code for both admin/index and tunes/index but note use of partial in admin which requires a key</li>
+<li>Note use of partial for /admin/index - partials created in folder /views/admin/partials and referenced as such in code
+<li>Note the href urls all point back to root (e.g. '/admin/index' and NOT admin/index)</li>
+<li>Note database settings will need to be adjusted for production and development environments</li>
+<li>Reference material on views can be found at http://framework.zend.com/manual/1.12/en/zend.view.helpers.html#zend.view.helpers.initial.partial</li>
+</ul>
+
+
+<h2>Branch: step_2_layout_controller_setup</h2>
+<p>Approximate demo time: 60 minutes</p>
+<ul>
+<li>This commit adds Artist, Tunes, Movies and Admin controllers.</li>
+<li>It adds the bootstrap template and reuses the Jumbotron example for the basic layout.</li>
+<li>An assets folder has been added to public directory to hold bootstrap files and custom files.</li>
+<li>The Admin Login button simply passes control to the admin controller. A later build will deal with authentication.</li>
+<li>The layout file is broken up into a number of partials: header, footer, navbar.</li>
+<li>Paths in the layout file are changed to point to the assets/bootstrap folders</li>
+<li>The application.ini file is enabled with a layout script</li>
+<li>The layouts/scripts folder is added to the application directory</li>
+<li>Demostrates using application.ini for projectSettings and injecting name of project into navigation bar
+</ul>
+
+<h2>Branch: step_1_initial_commit</h2>
+<p>Approximate demo time: 60 minutes without use of zend tool</p>
+<ul>
+<li>Setting up of virtual host environment: dsamovies.localhost</li>
+<li>Basic project created using zf tool
+<li>Demonstrates download and integration of Zend Library (1.12)</li>
+<li>Demonstrates use of APPLICATION_PATH and APPLICATION_ENV</li>
+<li>Demonstrates setup of include path for Zend Library 
+</ul>
+
+
+
+

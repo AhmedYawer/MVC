@@ -1,0 +1,39 @@
+
+<!--  notice start of table and header are BEFORE the loop -->
+<table class="table table-striped">
+<tr>
+	<th>Id</th>
+	<th>Artist</th>
+	<th>Album</th>
+	<th>Action</th>
+</tr>
+<?php foreach($this->collectionOfAlbums as $record) : ?>
+
+<!-- 
+    By default, the escape() method uses the PHP htmlspecialchars() function for escaping. 
+    However, depending on your environment, you may wish for escaping to occur in a different way.
+    Use the setEscape() method at the controller level to tell Zend_View what escaping callback to use. 
+-->
+
+<tr>
+	<td><?php echo $this->escape($record['id'])?></td>
+	<td><?php echo $this->escape(stripslashes($record['artist']));?></td>
+	<td><?php echo $this->escape(stripslashes($record['title']));?></td>
+	<td>
+	<a href="<?php echo $this->url(array('controller'=>'admin',
+'action'=>'updatealbum', 'id'=>$record['id']));?>">Edit</a>
+<a href="<?php echo $this->url(array('controller'=>'admin',
+'action'=>'delete', 'id'=>$record['id']));?>">Delete</a>
+	
+	
+	</td>
+</tr>
+
+
+<?php endforeach; ?>
+</table><!-- /notice end tag is OUTSIDE the loop -->
+
+
+
+<?php echo $this->paginationControl($this->collectionOfAlbums, 'Sliding', 'admin/partials/paginationcontrols.phtml'); ?>
+

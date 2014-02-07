@@ -1,0 +1,54 @@
+<ul class="pagination">
+    <?php if ($this->pageCount): ?>
+    <!-- First page link -->
+    <?php if (isset($this->previous)): ?>
+        <li><a href="<?php echo $this->url(array('page' => $this->first)); ?>">
+        First
+      </a> </li>
+    <?php else: ?>
+      <li><a><span class="disabled">First</span></a> </li>
+    <?php endif; ?>
+     
+    <!-- Previous page link -->
+    <?php if (isset($this->previous)): ?>
+        <li><a href="<?php echo $this->url(array('page' => $this->previous)); ?>">
+        &lt; Previous
+      </a> </li>
+    <?php else: ?>
+      <li><a><span class="disabled">&lt; Previous</span> </a></li>
+    <?php endif; ?>
+     
+      
+      <!-- Numbered page links -->
+<?php foreach ($this->pagesInRange as $page): ?>
+  <?php if ($page != $this->current): ?>
+      <li><a href="<?php echo $this->url(array('page' => $page)); ?>">
+        <?php echo $page; ?>
+    </a> </li>
+  <?php else: ?>
+    <li><a><?php echo $page; ?> </a></li>
+  <?php endif; ?>
+<?php endforeach; ?>
+
+    <!-- Next page link -->
+    <?php if (isset($this->next)): ?>
+        <li><a href="<?php echo $this->url(array('page' => $this->next)); ?>">
+        Next &gt;
+      </a> </li>
+    <?php else: ?>
+        <li><a><span class="disabled">Next &gt;</span></a> </li>
+    <?php endif; ?>
+     
+    <!-- Last page link -->
+    <?php if (isset($this->next)): ?>
+    <li><a href="<?php echo $this->url(array('page' => $this->last)); ?>">
+        Last
+      </a></li>
+    <?php else: ?>
+      <li><a><span class="disabled">Last</span></a></li>
+    <?php endif; ?>
+     
+    </div>
+    <?php endif; ?>
+
+    </ul>

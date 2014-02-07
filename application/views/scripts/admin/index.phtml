@@ -1,0 +1,20 @@
+ <div class="container">
+
+	<div class="col-md-12">
+	<h1>Administration Template</h1>
+    </div>
+    
+	<div class="col-md-3">
+	<?php echo $this->partial('admin/partials/admin_nav.phtml')?>
+	
+	
+	</div>
+	<div class="col-md-9">
+	<!-- use of partial requires view variable to be passed in array key -->
+        <?php echo $this->partial('admin/partials/albums.phtml',array('collectionOfAlbums'=>$this->collectionOfAlbums));?>
+	
+	</div>
+	
+	
+	
+</div>
